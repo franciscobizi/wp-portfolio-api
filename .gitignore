@@ -1,0 +1,3 @@
+# Not truck the wp-config.php file
+wp-config.php
+wp-content/uploads*
