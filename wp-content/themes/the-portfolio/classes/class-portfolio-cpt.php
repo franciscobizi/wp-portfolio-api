@@ -32,7 +32,7 @@ class Portfolio_Post_Type{
 	 */
 	protected function cpt_args() {
 		$labels = array(
-			'name'                  => __( 'Portfolio', 'the-portfolio' ),
+			'name'                  => __( 'Portfolios', 'the-portfolio' ),
 			'singular_name'         => __( 'Portfolio Item', 'the-portfolio' ),
 			'menu_name'             => _x( 'Portfolio', 'admin menu', 'the-portfolio' ),
 			'name_admin_bar'        => _x( 'Portfolio Item', 'add new on admin bar', 'the-portfolio' ),
