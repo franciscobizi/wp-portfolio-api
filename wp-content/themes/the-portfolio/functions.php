@@ -178,3 +178,9 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Portfolio CPT features.
+ */
+require get_template_directory() . '/classes/class-portfolio-cpt.php';
+require get_template_directory() . '/classes/class-portfolio-cpt-taxonomy.php';
+require get_template_directory() . '/classes/class-portfolio-cpt-registrations.php';
