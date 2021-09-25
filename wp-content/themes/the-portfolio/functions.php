@@ -195,3 +195,8 @@ function my_acf_json_save_point( $path ) {
 require get_template_directory() . '/classes/class-portfolio-cpt.php';
 require get_template_directory() . '/classes/class-portfolio-cpt-taxonomy.php';
 require get_template_directory() . '/classes/class-portfolio-cpt-registrations.php';
+
+/**
+ * Portfolio CPT API.
+ */
+require get_template_directory() . '/api/class-portfolio-api.php';

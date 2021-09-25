@@ -15,7 +15,7 @@
  */
 class Portfolio_Post_Type{
 	/**
-	 * Post type ID.
+	 * Post type name.
 	 *
 	 * @since 1.0.0
 	 *
@@ -60,6 +60,7 @@ class Portfolio_Post_Type{
 			'author',
 			'custom-fields',
 			'revisions',
+			'page-attributes',
 		);
 
 		$args = array(
