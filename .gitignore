@@ -1,3 +1,9 @@
-# Not truck the wp-config.php file
+# wp-config.php file
 wp-config.php
+# uploads folder
 wp-content/uploads*
+# theme directory unnecessary files
+wp-content/themes/the-portfolio/node_modules*
+wp-content/themes/the-portfolio/vendor*
+wp-content/themes/the-portfolio/package-lock.json
+wp-content/themes/the-portfolio/composer.lock
