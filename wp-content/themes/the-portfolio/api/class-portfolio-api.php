@@ -16,7 +16,7 @@
 class Portfolio_API{
 
 	private $total_pages;
-	private $per_page = 10;
+	private $per_page = 3;
 
 	function __construct(){
 		$portfolios = get_posts(array(
@@ -71,12 +71,15 @@ class Portfolio_API{
 		$thumbnail_type = wp_check_filetype($thumbnail);
 		
 		// set featured image to portfolio
-		if($created_id && in_array($thumbnail_type['ext'],$img_ext)){
+		if(!is_wp_error($created_id) && in_array($thumbnail_type['ext'],$img_ext)){
 			$featured_img_id = media_sideload_image( $thumbnail, $created_id, '', 'id' );
 			if(!is_wp_error( $featured_img_id)){
 				// set image as the post thumbnail
 				set_post_thumbnail($created_id, $featured_img_id);
 			} 
+		}else{
+			http_response_code(500);
+			return ["message" => "Something went wrong during creation. Try again!"];
 		}
 		
 		// if there are categories
@@ -122,7 +125,8 @@ class Portfolio_API{
 			}
 		}
 
-		return !empty($created_id) ? ["ID" => $created_id] : ["message" => "Something went wrong during creation. Try again!"];
+		http_response_code(200);
+		return ["ID" => $created_id];
     }
 
 
@@ -144,7 +148,60 @@ class Portfolio_API{
 			'offset'      => $offset,
 		));
 
-        return array_merge($portfolios,['cpage' => $cpage + 1, 'total_pages' => $this->total_pages]);
+		$items = [];
+
+		if(count($portfolios) > 0){
+			foreach($portfolios as $post){
+				$thumbnail = !empty(get_the_post_thumbnail_url($post->ID, 'full')) ? get_the_post_thumbnail_url($post->ID, 'full') : "";
+				$team = !empty(get_field("team",$post->ID)) ? get_field("team",$post->ID) : [];
+				$gallery = !empty(get_field("images",$post->ID)) ? get_field("images",$post->ID) : [];
+				$categories = wp_get_post_terms( $post->ID, 'theportfolio', array('fields' => 'names') );
+
+				array_push($items,[
+					"ID" 			=> $post->ID,
+					"title" 		=> $post->post_title,
+					"excerpt"	 	=> $post->post_excerpt,
+					"content" 		=> $post->post_content,
+					"thumbnail"		=> $thumbnail,
+					"permalink"		=> get_post_permalink($post->ID),
+					"gallery" 		=> $gallery,
+					"team" 			=> $team,
+					"categories" 	=> $categories,
+
+					]);
+			}
+		}
+
+        return ['items' => $items, 'cpage' => $cpage, 'total_pages' => $this->total_pages];
+	}
+	
+	/**
+	 * Return portfolios IDs collection.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array Portfolios.
+	 */
+	public function get_all_ids() {
+
+		$cpage = (int)$_GET['cpage'];
+		$offset = ($cpage * $this->per_page);
+
+        $portfolios = get_posts(array(
+			'post_type'   => 'portfolio',
+			'numberposts' => $this->per_page,
+			'offset'      => $offset,
+		));
+
+		$ids = [];
+
+		if(count($portfolios) > 0){
+			foreach($portfolios as $post){
+				array_push($ids,["ID" => $post->ID]);
+			}
+		}
+
+        return ['items' => $ids, 'cpage' => $cpage, 'total_pages' => $this->total_pages];
     }
 
     /**
@@ -157,12 +214,35 @@ class Portfolio_API{
 	public function get_one($request) {
 		$id = isset($request['id']) ? (int)$request['id'] : null;
 		
-		$portfolio = get_post($id);
-		if($portfolio['post_type'] != 'portfolio'){
-			return json_encode(["message" => "There is not item with this ID."]);
+		$post = get_post($id);
+
+		$item = [];
+		if(isset($post->post_type) && $post->post_type != 'portfolio'){
+			return ['item' => $item];
 		}
 
-        return $portfolio;
+
+		if($post){
+				$thumbnail = !empty(get_the_post_thumbnail_url($post->ID, 'full')) ? get_the_post_thumbnail_url($post->ID, 'full') : "";
+				$team = !empty(get_field("team",$post->ID)) ? get_field("team",$post->ID) : [];
+				$gallery = !empty(get_field("images",$post->ID)) ? get_field("images",$post->ID) : [];
+				$categories = wp_get_post_terms( $post->ID, 'theportfolio', array('fields' => 'names') );
+
+				array_push($item,[
+					"ID" 			=> $post->ID,
+					"title" 		=> $post->post_title,
+					"excerpt"	 	=> $post->post_excerpt,
+					"content" 		=> $post->post_content,
+					"thumbnail"		=> $thumbnail,
+					"permalink"		=> get_post_permalink($post->ID),
+					"gallery" 		=> $gallery,
+					"team" 			=> $team,
+					"categories" 	=> $categories,
+
+					]);
+		}
+
+        return ['item' => $item];
     }
 
 	/**
@@ -183,6 +263,13 @@ class Portfolio_API{
         register_rest_route('api/v1','/portfolios',array(
             'methods'   => 'GET',
 			'callback'  => array($this, 'get_all'),
+			'permission_callback' => function() { return ''; }, 
+		));
+
+		// get portfolios's ids
+        register_rest_route('api/v1','/portfolios/ids',array(
+            'methods'   => 'GET',
+			'callback'  => array($this, 'get_all_ids'),
 			'permission_callback' => function() { return ''; }, 
 		));
 
