@@ -10,8 +10,8 @@ get_header();
 			<h1>Portfolios list</h1>
 			<?php
 			$posts = new WP_Query( array(
-				'posts_per_page'=>3,
-				'post_type'=>'portfolio',
+				'posts_per_page' => 10,
+				'post_type' => 'portfolio',
 				'paged' => get_query_var('paged') ? get_query_var('paged') : 1
 				) 
 			); 

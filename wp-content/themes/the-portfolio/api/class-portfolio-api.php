@@ -16,7 +16,7 @@
 class Portfolio_API{
 
 	private $total_pages;
-	private $per_page = 3;
+	private $per_page = 10;
 
 	function __construct(){
 		$portfolios = get_posts(array(

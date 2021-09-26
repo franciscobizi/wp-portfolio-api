@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "c5faa499-969e-47fc-9686-9174c7ae3f4c",
+		"name": "WP RESP API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Portfolio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp-portfolio-api.loc/wp-json/api/v1/portfolios/15",
+					"protocol": "http",
+					"host": [
+						"wp-portfolio-api",
+						"loc"
+					],
+					"path": [
+						"wp-json",
+						"api",
+						"v1",
+						"portfolios",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Portfolios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp-portfolio-api.loc/wp-json/api/v1/portfolios/15",
+					"protocol": "http",
+					"host": [
+						"wp-portfolio-api",
+						"loc"
+					],
+					"path": [
+						"wp-json",
+						"api",
+						"v1",
+						"portfolios",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Portfolios Ids",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp-portfolio-api.loc/wp-json/api/v1/portfolios/ids/?cpage=0",
+					"protocol": "http",
+					"host": [
+						"wp-portfolio-api",
+						"loc"
+					],
+					"path": [
+						"wp-json",
+						"api",
+						"v1",
+						"portfolios",
+						"ids",
+						""
+					],
+					"query": [
+						{
+							"key": "cpage",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Portfolio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"House Company\",\r\n    \"author\" : 1,\r\n    \"excerpt\" : \"Just another post_title\",\r\n    \"content\" : \"Just another post_title\",\r\n    \"categories\" : [\r\n        \"Web\",\r\n        \"Builder\"\r\n    ],\r\n    \"thumbnail\" : \"https://vinusimages.co/wp-content/uploads/2018/10/EG7A2390.jpgA_.jpg\",\r\n    \"gallery\" : [\r\n        {\"photo\":\"https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_960_720.jpg\"},\r\n        {\"photo\":\"https://cdn.pixabay.com/photo/2016/09/18/14/21/swimmer-1678307_960_720.jpg\"},\r\n        {\"photo\":\"https://cdn.pixabay.com/photo/2016/10/12/02/56/girl-1733352_960_720.jpg\"},\r\n        {\"photo\":\"https://cdn.pixabay.com/photo/2017/02/15/00/21/girl-2067378_960_720.jpg\"}\r\n    ],\r\n    \"team\" : [\r\n        {\"name\":\"Anton\",\"description\":\"Web Developer\",\"photo\":\"https://cdn.pixabay.com/photo/2017/02/04/12/25/man-2037255_960_720.jpg\",\"social_link\":\"https://www.linkedin.com/in/anton/\"},\r\n        {\"name\":\"Simon\",\"description\":\"Designer\",\"photo\":\"https://cdn.pixabay.com/photo/2017/11/02/03/35/gothic-2910057_960_720.jpg\",\"social_link\":\"https://www.linkedin.com/in/simon/\"}\r\n\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://wp-portfolio-api.loc/wp-json/api/v1/portfolios",
+					"protocol": "http",
+					"host": [
+						"wp-portfolio-api",
+						"loc"
+					],
+					"path": [
+						"wp-json",
+						"api",
+						"v1",
+						"portfolios"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
