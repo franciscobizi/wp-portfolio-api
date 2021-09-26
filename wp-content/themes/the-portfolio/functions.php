@@ -144,7 +144,11 @@ function the_portfolio_scripts() {
 	wp_style_add_data( 'the-portfolio-style', 'rtl', 'replace' );
 
 	wp_enqueue_script( 'the-portfolio-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-
+	wp_enqueue_script( 'the-portfolio-custom', get_template_directory_uri() . '/js/custom.js', array('jquery'), _S_VERSION, true );
+	wp_localize_script('the-portfolio-custom', 'api', 
+                                array(
+                                        'base_endpoint' => 'http://wp-portfolio-api.loc/wp-json/api/v1/',
+                                    ));
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}

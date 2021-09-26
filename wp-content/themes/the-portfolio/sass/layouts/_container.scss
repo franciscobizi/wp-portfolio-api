@@ -1,0 +1,37 @@
+.container{
+    width:80%;
+    margin:auto;
+    h1{
+        margin:30px 0px;font-size:3rem; border-bottom:2px;
+    }
+    .portfolio-wrapper{
+        display:flex;
+        width:100%;
+        flex-direction:row;
+        flex-wrap: wrap;
+        .portfolio-wrapper-item{
+            font-size: 1.5rem;
+            width:24%; margin:5px;
+            a{text-decoration: none;}
+            img{width: 100%;}
+        }
+    }
+    .cpt-pagination{
+        display: none;
+        font-size: 1.5rem;
+        .nav{cursor: pointer};
+        .cpt-prev,.cpt-next{
+            background: #eeeeee; 
+            padding-left: 8px; 
+            padding-right: 8px;
+            padding-bottom: 4px;
+            .disabled{cursor: default!important; pointer-events: none!important;}
+        }
+        &.show{display: block;}
+    }
+    @media (max-width:768px){
+        width: 100%;
+        padding: 15px;
+        .portfolio-wrapper-item{width: 100%;}
+    }
+}
